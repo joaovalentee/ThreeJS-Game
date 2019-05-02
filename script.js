@@ -181,7 +181,7 @@ console.clear();
   }
   
   function init() {
-    window.addEventListener('resize', onWindowResize , false);
+    
     container = document.getElementById('container');
     
     renderer = new THREE.WebGLRenderer();
@@ -237,6 +237,7 @@ console.clear();
     
     renderer.domElement.addEventListener('mousemove', containerMouseMove);
     renderer.domElement.style.cursor = 'none';
+    //window.addEventListener('resize', onWindowResize , false);
   }
   
   function addPaddle() {
@@ -251,13 +252,13 @@ console.clear();
     var mouseX = e.clientX;
     camera.position.x = paddle1.position.x = -((WIDTH - mouseX) / WIDTH * FIELD_WIDTH) + (FIELD_WIDTH / 2);
   }
+
+  function onWindowResize(){
+    camera.aspect=window.innerWidth /window.innerHeight;
+    camera.updateProjectionMatrix();
+    render.setSize(window.innerWidth,window.innerHeight);
+}
   
   init();
 })(window, window.document, window.THREE);
 
-function onWindowResize(){
-
-    camara.aspect=window.innerWidth /window.innerHeight;
-    camara.updateProjectionMatrix();
-    render.setSize(window.innerWidth,window.innerHeight);
-}
