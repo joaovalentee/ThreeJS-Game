@@ -21,7 +21,8 @@ console.clear();
       
       //get the scoreboard element.
       scoreBoard = document.getElementById('scoreBoard'),
-      
+      ScoreBoard = document.getElementById('ScoreBoard'),
+
       //declare members.
       container, renderer, camera, mainLight,
       scene, ball, paddle1, paddle2, field, running,
@@ -142,8 +143,8 @@ console.clear();
   }
   
   function updateScoreBoard() {
-      scoreBoard.innerHTML = 'Player 1: ' + score.player1 + ' Player 2: ' + 
-        score.player2;
+      scoreBoard.innerHTML = 'Player 1-' + score.player1 ;
+      ScoreBoard.innerHTML =  score.player2+ '-Player 2' ;
   }
   
   function stopBall(){ 
@@ -200,24 +201,25 @@ console.clear();
     field = new THREE.Mesh(fieldGeometry, fieldMaterial);
     field.position.set(0, -50, 0);
     
-    var paredeGeometry = new THREE.CubeGeometry(FIELD_WIDTH, 90, 10),
-        paredeMaterial = new THREE.MeshLambertMaterial({ color: 0xb3d9ff });
+    var paredeGeometry = new THREE.CubeGeometry(FIELD_WIDTH, 90, 90),
+        paredeMaterial = new THREE.MeshLambertMaterial({ color: 0x070eef });
     parede = new THREE.Mesh(paredeGeometry, paredeMaterial);
-    parede.position.set(0,0,-FIELD_LENGTH/2)
+    parede.position.set(0,0,-FIELD_LENGTH/2 -45)
     scene.add(parede)
 
-    paredeDireita = new THREE.Mesh(new THREE.CubeGeometry(10, 90, FIELD_LENGTH), paredeMaterial);
-    paredeDireita.position.set(FIELD_WIDTH/2,0,0)
+    paredeDireita = new THREE.Mesh(new THREE.CubeGeometry(90, 90, FIELD_LENGTH), paredeMaterial);
+    paredeDireita.position.set(FIELD_WIDTH/2 +45,0,0)
     scene.add(paredeDireita)
 
-    paredeEsquerda = new THREE.Mesh(new THREE.CubeGeometry(10, 90, FIELD_LENGTH), paredeMaterial);
-    paredeEsquerda.position.set(-FIELD_WIDTH/2,0,0)
+    paredeEsquerda = new THREE.Mesh(new THREE.CubeGeometry(90, 90, FIELD_LENGTH), paredeMaterial);
+    paredeEsquerda.position.set(-FIELD_WIDTH/2 -45,0,0)
     scene.add(paredeEsquerda)
-
+i=0;
     scene.add(field);
-    paddle1 = addPaddle();
+    paddle1 = addPaddle(i);
     paddle1.position.z = FIELD_LENGTH / 2;
-    paddle2 = addPaddle();
+    i++;
+    paddle2 = addPaddle(i);
     paddle2.position.z = -FIELD_LENGTH / 2;
     
     var ballGeometry = new THREE.SphereGeometry(BALL_RADIUS, 16, 16),
@@ -240,12 +242,21 @@ console.clear();
     //window.addEventListener('resize', onWindowResize , false);
   }
   
-  function addPaddle() {
-    var paddleGeometry = new THREE.CubeGeometry(PADDLE_WIDTH, PADDLE_HEIGHT, 10, 1, 1, 1),
-        paddleMaterial = new THREE.MeshLambertMaterial({ color: 0xCCCCCC }),
+  function addPaddle(i) {
+    if ( i == 0)
+    {
+      var paddleGeometry = new THREE.CubeGeometry(PADDLE_WIDTH, PADDLE_HEIGHT, 10, 1, 1, 1),
+        paddleMaterial = new THREE.MeshLambertMaterial({ color: 0xff9900 }),
         paddle = new THREE.Mesh(paddleGeometry, paddleMaterial);
+    }else{
+      var paddleGeometry = new THREE.CubeGeometry(PADDLE_WIDTH, PADDLE_HEIGHT, 10, 1, 1, 1),
+      paddleMaterial = new THREE.MeshLambertMaterial({ color: 0xf2ff00}),
+      paddle = new THREE.Mesh(paddleGeometry, paddleMaterial);
+  }
     scene.add(paddle);
+    i++;
     return paddle;
+    
   }
   
   function containerMouseMove(e) {
