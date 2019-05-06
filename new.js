@@ -19,7 +19,9 @@ var UNITWIDTH = 90,
     Comprimento_campo=1000,
     score1=0,
     score2=0,
-    cube1;
+    cube1,
+    cube2;
+
 // Flags to determine which direction the player is moving
 var moveLeft = false;
 var moveRight = false;
@@ -76,6 +78,8 @@ function init() {
   // Add lights to the scene
   luzes();
   Bloqueio();
+  Bloqueio2();
+
   // Listen for if the window changes sizes and adjust
   window.addEventListener('resize', onWindowResize, false);
 
@@ -87,6 +91,9 @@ if(player1.position.x - 100 > cubo.position.x) {
    player1.position.x -= Math.min(player1.position.x - cubo.position.x, 4);
  }else if(player1.position.x - 100 < cubo.position.x) {
    player1.position.x += Math.min(cubo.position.x - player1.position.x, 4);
+ }
+ if(player1.position.x== player1.position.x){
+  player1.position.x += 5 ;
  }
 }
 
@@ -157,7 +164,7 @@ function Cubo() {
 
 function Bloqueio(){
 
-  var cubeGeometry = new THREE.BoxGeometry(80, 30, 30);
+  var cubeGeometry = new THREE.BoxGeometry(30, 30, 30);
   var cubeMaterial =  new THREE.MeshPhongMaterial({color: groundColor});
   var cu = new THREE.Mesh(cubeGeometry, cubeMaterial);
   cu.position.set(RandomXCube(), 10, RandomYCube());
@@ -166,12 +173,23 @@ function Bloqueio(){
  
 }
 
+function Bloqueio2(){
+
+  var cubeGeometry = new THREE.BoxGeometry(30, 30, 30);
+  var cubeMaterial =  new THREE.MeshPhongMaterial({color: groundColor});
+  var cu = new THREE.Mesh(cubeGeometry, cubeMaterial);
+  cu.position.set(RandomXCube(), 10, RandomYCube());
+  cube2=cu;
+  cena.add(cube2);
+ 
+}
+
 function RandomXCube() {
-  return Math.random() * ((Largura_campo/2-50) - (-Largura_campo/2+50)) + (-Largura_campo/2+50);
+  return Math.random() * ((Largura_campo/2-50) - (-Largura_campo/2+50)) + (-Largura_campo/2+50) ;
 }
 
 function RandomYCube() {
-  return Math.random() * ((Comprimento_campo/2-50) - (-Comprimento_campo/2+50)) + (-Comprimento_campo/2+50);
+  return Math.random() * ((Comprimento_campo/2-200) - (-Comprimento_campo/2+200)) + (-Comprimento_campo/2+200);
   
 }
 
@@ -223,11 +241,11 @@ function controlarCubo() {
   }
   atualizarPosicaoCubo();
   if(cubo.position.z == player2.position.z && (cubo.position.x < player2.position.x+ 50 && cubo.position.x > player2.position.x - 50 ) ){
-    cubo.$velocity.x = (cubo.position.x - player2.position.x) / 5;
+    cubo.$velocity.x = (cubo.position.x - player2.position.x) / 3;
     cubo.$velocity.z *= -1;
   }
   if(cubo.position.z == player1.position.z && (cubo.position.x < player1.position.x+ 50 && cubo.position.x > player1.position.x - 50 ) ){
-    cubo.$velocity.x = (cubo.position.x - player1.position.x) / 5;
+    cubo.$velocity.x = (cubo.position.x - player1.position.x) / 3;
     cubo.$velocity.z *= -1;
   }
   
@@ -245,15 +263,22 @@ function controlarCubo() {
  
 
   if(isSideCollision()) {
-    cubo.$velocity.x *= -1; 
+    cubo.$velocity.x *= -1;   console.log("reset");
+
   }
 
 
- if(cubo.position.x < cube1.position.x+40 && cubo.position.x > cube1.position.x-40 && cubo.position.z < cube1.position.z+40 && cubo.position.z > cube1.position.z-40){
+ if(cubo.position.x < cube1.position.x+15 && cubo.position.x > cube1.position.x-15 && cubo.position.z < cube1.position.z+15 && cubo.position.z > cube1.position.z-15){
     cubo.$velocity.x *= -1;
     cubo.$velocity.z *= -1;
 
   }
+
+ if(cubo.position.x < cube2.position.x+15 && cubo.position.x > cube2.position.x-15 && cubo.position.z < cube2.position.z+15 && cubo.position.z > cube2.position.z-15){
+  cubo.$velocity.x *= -1;
+  cubo.$velocity.z *= -1;
+
+}
 }
 
 
@@ -271,8 +296,6 @@ function animate() {
   requestAnimationFrame(animate);
   controlarCubo();
   computador_jogador();
-  //delta = relogio.getDelta();
-  //animateBlock(delta);
 }
 
 // Parar cubo
