@@ -18,7 +18,8 @@ var UNITWIDTH = 90,
     Largura_campo=500,
     Comprimento_campo=1000,
     score1=0,
-    score2=0;
+    score2=0,
+    cube1;
 // Flags to determine which direction the player is moving
 var moveLeft = false;
 var moveRight = false;
@@ -70,12 +71,11 @@ function init() {
   Cubo();
   updateScoreBoard();
  
-  Bloqueio();
   listenTeclasPressionadas();
 
   // Add lights to the scene
   luzes();
-
+  Bloqueio();
   // Listen for if the window changes sizes and adjust
   window.addEventListener('resize', onWindowResize, false);
 
@@ -157,14 +157,13 @@ function Cubo() {
 
 function Bloqueio(){
 
-  var cubeGeometry = new THREE.BoxGeometry(30, 30, 30);
+  var cubeGeometry = new THREE.BoxGeometry(80, 30, 30);
   var cubeMaterial =  new THREE.MeshPhongMaterial({color: groundColor});
-  var cube1 = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
-  cube1.position.set(RandomXCube(), 10, RandomYCube());
- 
+  var cu = new THREE.Mesh(cubeGeometry, cubeMaterial);
+  cu.position.set(RandomXCube(), 10, RandomYCube());
+  cube1=cu;
   cena.add(cube1);
-  collidableObjects.push(cube1);
+ 
 }
 
 function RandomXCube() {
@@ -173,6 +172,7 @@ function RandomXCube() {
 
 function RandomYCube() {
   return Math.random() * ((Comprimento_campo/2-50) - (-Comprimento_campo/2+50)) + (-Comprimento_campo/2+50);
+  
 }
 
 
@@ -194,9 +194,11 @@ function listenTeclasPressionadas() {
   // Tecla solta
   var teclaSolta = function(event) {
   switch (event.which) {
-    case 37:player2.position.x -=20;
+    case 37:  
+    player2.position.x -=20;
       break;
-   case 39:player2.position.x += 20;
+   case 39: 
+   player2.position.x += 20;
       break;
   }
 };
@@ -207,17 +209,15 @@ document.addEventListener('keyup', teclaPressionada, false);
 }
 
 function Direita(){
-  if(player2.position.x +50 < Largura_campo/2){
     player2.position.x += 2;
-  }
-
 }
 function Esquerda(){
     player2.position.x -= 2;
-  
 }
 
 function controlarCubo() {
+
+  
   if(!cubo.$velocity){
     comecarMovimentoCubo();
   }
@@ -249,11 +249,11 @@ function controlarCubo() {
   }
 
 
- /* if(cubo.position.x < cube1.position.x+15 && cubo.position.x > cube1.position.x-15 || cubo.position.z < cube1.position.z+15 && cubo.position.z > cube1.position.z-15){
-    cubo.$velocity.x = (cubo.position.x - cube1.position.x) / 5;
-    cubo.$velocity.z = (cubo.position.z - cube1.position.z) / 5;
+ if(cubo.position.x < cube1.position.x+40 && cubo.position.x > cube1.position.x-40 && cubo.position.z < cube1.position.z+40 && cubo.position.z > cube1.position.z-40){
+    cubo.$velocity.x *= -1;
+    cubo.$velocity.z *= -1;
 
-  }*/
+  }
 }
 
 
@@ -285,6 +285,8 @@ function reset() {
   console.log("reset");
   cubo.position.set(0,10,0);
   cubo.$velocity= null;
+  player1.position.x=0;
+  player2.position.x=0;
 }
 
 // Começao movimento do cubo 
