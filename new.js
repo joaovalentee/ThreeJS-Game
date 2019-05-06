@@ -227,10 +227,10 @@ document.addEventListener('keyup', teclaPressionada, false);
 }
 
 function Direita(){
-    player2.position.x += 2;
+    player2.position.x += 10;
 }
 function Esquerda(){
-    player2.position.x -= 2;
+    player2.position.x -= 10;
 }
 
 function controlarCubo() {
@@ -296,6 +296,7 @@ function animate() {
   requestAnimationFrame(animate);
   controlarCubo();
   computador_jogador();
+
 }
 
 // Parar cubo
