@@ -6,37 +6,32 @@
   </head>
 
   <body>
-    <div class="Score">
     <h3 id="scoreBoard"></h3>
-    <h3 style="display: inline-block">vs</h3>
-    <h3 id="ScoreBoard"></h3>
-  </div>
     <div id="container"></div>
     <script src="three.min.js"></script>
-    <script src="script.js"></script>
+    <script src="PointerLockControls.js"></script>
+  
+    <div id="info"></div>
+    
+    <script src="new.js"></script>
+    
   </body>
 
   <style>
-    .Score{
-      width: 30%;
-      position: absolute;
-      padding-left: 40%;
-      padding-right: 40%;
-    }
+
     #scoreBoard{
-        text-align: left;
-        size: 10%;
-        color: orange;
-        display: inline-block ;
-        font-weight: bold;
-        
-    }
-    #ScoreBoard{
-        text-align: right;
-        size: 10%;
-        color:yellow;
-        display: inline-block ;
-        font-weight: bold;
+      color:black;
+      display: inline-block;
+      text-align: center;
+      vertical-align: center;
+      position: absolute;
+      margin-top: 20%;
+      margin-bottom: 60%;
+      margin-left: 40%;
+      margin-right: 35%;
+      color: grey;
+      font-size: 200%;
+      font-weight: bold;
     }
       body{
           width: 100%;
@@ -45,6 +40,14 @@
           overflow-y: hidden;
           margin: 0;
           padding: 0;
+      }
+      #info {
+        position: absolute;
+        top: 10px;
+        width: 100%;
+        text-align: center;
+        z-index: 100;
+        display:block;
       }
   </style>
 </html>
